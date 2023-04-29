@@ -13,8 +13,6 @@ const PostsList = ({ setcurrentId }) => {
 
   const { loading, error, success, posts } = postList;
 
-  // console.log(postList);
-
   return loading ? (
     <CircularProgress />
   ) : (
@@ -24,7 +22,7 @@ const PostsList = ({ setcurrentId }) => {
       alignItems="stretch"
       spacing={3}
     >
-      {posts.map((post) => (
+      {posts?.map((post) => (
         <Grid item key={post._id} xs={12} sm={6}>
           <Post setcurrentId={setcurrentId} post={post} />
         </Grid>

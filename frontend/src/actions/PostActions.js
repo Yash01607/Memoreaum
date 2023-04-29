@@ -58,18 +58,20 @@ export const deletePost = (id) => async (dispatch) => {
     const { data } = await api.deletePost(id);
 
     dispatch({ type: DELETE_POST_SUCCESS, payload: data });
+
+    dispatch(getPosts());
   } catch (error) {
     dispatch({ type: DELETE_POST_ERROR, payload: error.message });
   }
 };
 
 export const likePost = (id) => async (dispatch) => {
-  console.log('int like post action');
   try {
     dispatch({ type: LIKE_POST_REQUEST });
     const { data } = await api.likePost(id);
 
     dispatch({ type: LIKE_POST_SUCCESS, payload: data });
+    dispatch(getPosts());
   } catch (error) {
     dispatch({ type: LIKE_POST_ERROR, payload: error.message });
   }

@@ -12,13 +12,15 @@ export const getPosts = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-  // console.log(req.body);
+  console.log('req.userId: ', req.userId);
   const post = new PostModel({
     title: req.body.title || '',
     message: req.body.message || '',
-    creator: req.body.creator || '',
+    creator: req.userId || '',
+    name: req.body.name || '',
     tags: req.body.tags || '',
     selectedFile: req.body.selectedFile || '',
+    createdAt: new Date().toISOString(),
   });
   try {
     const newPost = await post.save();
@@ -42,7 +44,7 @@ export const updatePost = async (req, res) => {
         _id: postId,
         title: req.body.title || '',
         message: req.body.message || '',
-        creator: req.body.creator || '',
+        creator: req.userId || '',
         tags: req.body.tags || '',
         selectedFile: req.body.selectedFile || '',
       },
@@ -73,6 +75,9 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
   const { id: postId } = req.params;
+  if (!req.userId) {
+    return res.status(404).send({ message: 'UnAuthenticated Request Error.' });
+  }
 
   if (!mongoose.Types.ObjectId.isValid(postId)) {
     return res.status(404).send({ message: 'No Post With this Id' });
@@ -80,13 +85,18 @@ export const likePost = async (req, res) => {
 
   try {
     const post = await PostModel.findById(postId);
-    const updatedPost = await PostModel.findByIdAndUpdate(
-      postId,
-      {
-        likeCount: post.likeCount + 1,
-      },
-      { new: true }
-    );
+
+    const index = post.likes.findIndex((id) => id === String(req.userId));
+
+    if (index === -1) {
+      post.likes.push(req.userId);
+    } else {
+      post.likes = post.likes.filter((id) => id !== String(req.userId));
+    }
+
+    const updatedPost = await PostModel.findByIdAndUpdate(postId, post, {
+      new: true,
+    });
     return res.status(200).json(updatedPost);
   } catch (error) {
     return res.status(404).json({ message: error.message });

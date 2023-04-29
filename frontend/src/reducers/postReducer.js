@@ -16,7 +16,7 @@ import {
   UPDATE_POST_SUCCESS,
 } from '../constants/PostConstants';
 
-const postListReducer = (state = { loading: true, posts: [] }, action) => {
+const postListReducer = (state = { loading: false, posts: [] }, action) => {
   switch (action.type) {
     case GET_ALL_POSTS_REQUESTS:
       return { loading: true };
@@ -29,7 +29,7 @@ const postListReducer = (state = { loading: true, posts: [] }, action) => {
   }
 };
 
-const createPostReducer = (state = { loading: true, post: {} }, action) => {
+const createPostReducer = (state = { loading: false, post: {} }, action) => {
   switch (action.type) {
     case CREATE_POST_REQUEST:
       return { loading: true };
@@ -42,7 +42,7 @@ const createPostReducer = (state = { loading: true, post: {} }, action) => {
   }
 };
 
-const updatePostReducer = (state = { loading: true, post: {} }, action) => {
+const updatePostReducer = (state = { loading: false, post: {} }, action) => {
   switch (action.type) {
     case UPDATE_POST_REQUEST:
       return { loading: true };
@@ -55,7 +55,7 @@ const updatePostReducer = (state = { loading: true, post: {} }, action) => {
   }
 };
 
-const deletePostReducer = (state = { loading: true }, action) => {
+const deletePostReducer = (state = { loading: false }, action) => {
   switch (action.type) {
     case DELETE_POST_REQUEST:
       return { loading: true };
@@ -68,7 +68,7 @@ const deletePostReducer = (state = { loading: true }, action) => {
   }
 };
 
-const likePostReducer = (state = { loading: true, post: {} }, action) => {
+const likePostReducer = (state = { loading: false, post: {} }, action) => {
   switch (action.type) {
     case LIKE_POST_REQUEST:
       return { loading: true };

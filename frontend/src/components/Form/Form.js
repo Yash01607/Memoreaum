@@ -4,12 +4,11 @@ import FileBase from 'react-file-base64';
 
 import { TextField, Paper, Typography, Button } from '@material-ui/core';
 
-import { createPost, updatepost } from '../../actions/PostActions';
+import { createPost, getPosts, updatepost } from '../../actions/PostActions';
 
 import useStyles from './FormStyles';
 
 const Form = ({ currentId, setcurrentId }) => {
-  const [creator, setcreator] = useState('');
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
   const [tags, setTags] = useState('');
@@ -17,43 +16,64 @@ const Form = ({ currentId, setcurrentId }) => {
 
   const { posts } = useSelector((state) => state.postList);
 
+  const userInfoFromSTate = useSelector(
+    (state) => state.googleAuthSuccessBackendSave?.authData
+  );
+
   const updatingPost = posts ? posts.find((p) => p._id === currentId) : null;
 
   const dispatch = useDispatch();
 
   const classes = useStyles();
 
+  const user = JSON.parse(localStorage.getItem('profile'));
+
   useEffect(() => {
     if (updatingPost) {
-      setcreator(updatingPost.creator);
       setTitle(updatingPost.title);
       setMessage(updatingPost.message);
       setTags(updatingPost.tags);
       setselectedFile(updatingPost.selectedFile);
     }
-  }, [updatingPost]);
+  }, [updatingPost, userInfoFromSTate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const postData = { creator, title, message, tags, selectedFile };
+    const postData = {
+      name: user?.result?.name,
+      title,
+      message,
+      tags,
+      selectedFile,
+    };
 
     if (currentId) {
       dispatch(updatepost(currentId, postData));
     } else {
       dispatch(createPost(postData));
     }
+    dispatch(getPosts());
 
     clearForm();
   };
 
   const clearForm = () => {
     setcurrentId(null);
-    setcreator('');
     setTitle('');
     setMessage('');
     setTags('');
     setselectedFile('');
   };
+
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please SignIn to create your own memory and like other's memories.
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -66,14 +86,6 @@ const Form = ({ currentId, setcurrentId }) => {
         <Typography variant="h6">
           {currentId ? `Editing a Memory` : `Creating a Memory`}
         </Typography>
-        <TextField
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-          value={creator}
-          onChange={(e) => setcreator(e.target.value)}
-        />
         <TextField
           name="title"
           variant="outlined"
