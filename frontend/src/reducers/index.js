@@ -7,6 +7,7 @@ import {
   deletePostReducer,
   likePostReducer,
   postReducer,
+  // commentPostReducer,
 } from './postReducer';
 
 import { googleAuthSuccessBackendSaveReducer } from './authReducer';
@@ -19,4 +20,5 @@ export default combineReducers({
   likePost: likePostReducer,
   googleAuthSuccessBackendSave: googleAuthSuccessBackendSaveReducer,
   post: postReducer,
+  // commentPost: commentPostReducer,
 });

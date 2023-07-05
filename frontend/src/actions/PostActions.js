@@ -1,5 +1,8 @@
 import * as api from '../api/index';
 import {
+  COMMENT_POST_ERROR,
+  COMMENT_POST_REQUEST,
+  COMMENT_POST_SUCCESS,
   CREATE_POST_ERROR,
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
@@ -93,5 +96,17 @@ export const likePost = (id) => async (dispatch) => {
     dispatch(getPosts());
   } catch (error) {
     dispatch({ type: LIKE_POST_ERROR, payload: error.message });
+  }
+};
+
+export const commentPost = (value, id) => async (dispatch) => {
+  try {
+    dispatch({ type: COMMENT_POST_REQUEST });
+    const { data } = await api.commentPost(value, id);
+    dispatch({ type: COMMENT_POST_SUCCESS, payload: data });
+
+    getPost(id);
+  } catch (error) {
+    dispatch({ type: COMMENT_POST_ERROR, payload: error.message });
   }
 };

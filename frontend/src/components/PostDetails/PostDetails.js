@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 
 import { getPost } from '../../actions/PostActions';
 import useStyles from './PostDetailsStyles';
+import CommentSection from './CommentSection';
 
 const Post = () => {
   const { post, loading, error } = useSelector((state) => state.post);
@@ -46,12 +47,12 @@ const Post = () => {
           <Typography variant="body1">
             {moment(post.createdAt).fromNow()}
           </Typography>
-          <Divider style={{ margin: '20px 0' }} />
+          {/* <Divider style={{ margin: '20px 0' }} />
           <Typography variant="body1">
             <strong>Realtime Chat - coming soon!</strong>
-          </Typography>
+          </Typography> */}
           <Divider style={{ margin: '20px 0' }} />
-          {/* <CommentSection post={post} /> */}
+          <CommentSection post={post} />
           <Divider style={{ margin: '20px 0' }} />
         </div>
         <div className={classes.imageSection}>

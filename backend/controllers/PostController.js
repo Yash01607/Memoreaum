@@ -118,3 +118,28 @@ export const likePost = async (req, res) => {
     return res.status(404).json({ message: error.message });
   }
 };
+
+export const commentPost = async (req, res) => {
+  const { id: postId } = req.params;
+  const { value } = req.body;
+  if (!req.userId) {
+    return res.status(404).send({ message: 'UnAuthenticated Request Error.' });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(postId)) {
+    return res.status(404).send({ message: 'No Post With this Id' });
+  }
+
+  try {
+    const post = await PostModel.findById(postId);
+
+    post.comments.push(value);
+
+    const updatedPost = await PostModel.findByIdAndUpdate(postId, post, {
+      new: true,
+    });
+    return res.status(200).json(updatedPost);
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+};

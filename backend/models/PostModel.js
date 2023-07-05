@@ -7,6 +7,7 @@ const postSchemma = mongoose.Schema({
   name: String,
   tags: [String],
   selectedFile: String,
+  comments: { type: [String], default: [] },
   likes: { type: [String], default: [] },
   createdAt: { type: Date, default: new Date() },
 });

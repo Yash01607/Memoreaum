@@ -1,4 +1,7 @@
 import {
+  COMMENT_POST_ERROR,
+  COMMENT_POST_REQUEST,
+  COMMENT_POST_SUCCESS,
   CREATE_POST_ERROR,
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
@@ -40,6 +43,12 @@ const postReducer = (state = { loading: false, post: {} }, action) => {
       return { loading: false, success: true, post: action.payload };
     case GET_POST_ERROR:
       return { loading: false, error: action.payload };
+    case COMMENT_POST_REQUEST:
+      return { loading: true };
+    case COMMENT_POST_SUCCESS:
+      return { loading: false, success: true, post: action.payload };
+    case COMMENT_POST_ERROR:
+      return { loading: true, error: action.payload };
     default:
       return state;
   }
@@ -96,6 +105,11 @@ const likePostReducer = (state = { loading: false, post: {} }, action) => {
   }
 };
 
+// const commentPostReducer = (state = { loading: false, post: {} }, action) => {
+//   switch (action.type) {
+//   }
+// };
+
 export {
   postListReducer,
   createPostReducer,
@@ -103,4 +117,5 @@ export {
   deletePostReducer,
   likePostReducer,
   postReducer,
+  // commentPostReducer,
 };

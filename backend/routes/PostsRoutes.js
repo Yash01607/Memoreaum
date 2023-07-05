@@ -6,6 +6,7 @@ import {
   deletePost,
   likePost,
   getPost,
+  commentPost,
 } from '../controllers/PostController.js';
 import { isAuth } from '../middleware/authMiddleware.js';
 
@@ -17,5 +18,6 @@ postRouter.post('/', isAuth, createPost);
 postRouter.patch('/:id', isAuth, updatePost);
 postRouter.delete('/:id', isAuth, deletePost);
 postRouter.patch('/:id/likepost', isAuth, likePost);
+postRouter.post('/:id/commentPost', isAuth, commentPost);
 
 export default postRouter;

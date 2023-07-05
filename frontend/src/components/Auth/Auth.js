@@ -44,7 +44,7 @@ const Auth = () => {
   useEffect(() => {
     function start() {
       gapi.client.init({
-        clientId: env.REACT_PUBLIC_GOOGLE_CLIENT_ID,
+        clientId: env?.REACT_PUBLIC_GOOGLE_CLIENT_ID,
         scope: 'email',
       });
     }
@@ -149,7 +149,7 @@ const Auth = () => {
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </Button>
           <GoogleLogin
-            clientId={env.REACT_PUBLIC_GOOGLE_CLIENT_ID}
+            clientId={env?.REACT_PUBLIC_GOOGLE_CLIENT_ID}
             onSuccess={googleSuccessHandler}
             onFailure={googleFailureHandler}
             cookiePolicy="single_host_origin"
