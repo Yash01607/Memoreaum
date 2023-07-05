@@ -40,11 +40,18 @@ const Navbar = () => {
   }, [user, dispatch, navigate, location]);
 
   const logouthandler = () => {
-    dispatch(logoutAction(navigate));
+    if (window.confirm('Are you sure you want to logout?')) {
+      dispatch(logoutAction(navigate));
+    }
   };
 
   return (
-    <AppBar className={classes.appBar} position="static" color="inherit">
+    <AppBar
+      className={classes.appBar}
+      position="static"
+      color="inherit"
+      // maxWidth="xl"
+    >
       <div className={classes.brandContainer}>
         <Typography
           component={Link}

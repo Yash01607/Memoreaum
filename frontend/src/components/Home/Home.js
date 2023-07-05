@@ -23,7 +23,7 @@ const Home = () => {
 
   return (
     <Grow in>
-      <Container>
+      <Container maxWidth="xl">
         <Grid
           container
           className={classes.mainContainer}
@@ -31,10 +31,10 @@ const Home = () => {
           alignItems="stretch"
           spacing={3}
         >
-          <Grid item xs={12} sm={7}>
+          <Grid item xs={12} sm={8} md={9}>
             <PostsList setcurrentId={setcurrentId} />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={8} md={3}>
             <Form currentId={currentId} setcurrentId={setcurrentId} />
           </Grid>
         </Grid>

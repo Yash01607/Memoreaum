@@ -8,6 +8,9 @@ import {
   GET_ALL_POSTS_ERROR,
   GET_ALL_POSTS_REQUESTS,
   GET_ALL_POSTS_SUCCESS,
+  GET_POST_ERROR,
+  GET_POST_REQUESTS,
+  GET_POST_SUCCESS,
   LIKE_POST_ERROR,
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
@@ -29,6 +32,18 @@ const postListReducer = (state = { loading: false, posts: [] }, action) => {
   }
 };
 
+const postReducer = (state = { loading: false, post: {} }, action) => {
+  switch (action.type) {
+    case GET_POST_REQUESTS:
+      return { loading: true };
+    case GET_POST_SUCCESS:
+      return { loading: false, success: true, post: action.payload };
+    case GET_POST_ERROR:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 const createPostReducer = (state = { loading: false, post: {} }, action) => {
   switch (action.type) {
     case CREATE_POST_REQUEST:
@@ -87,4 +102,5 @@ export {
   updatePostReducer,
   deletePostReducer,
   likePostReducer,
+  postReducer,
 };

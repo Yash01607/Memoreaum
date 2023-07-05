@@ -13,6 +13,12 @@ const PostsList = ({ setcurrentId }) => {
 
   const { loading, error, success, posts } = postList;
 
+  // if (error) {
+  //   return (
+  //     <Alert severity="error">This is an error alert — check it out!</Alert>
+  //   );
+  // }
+
   return loading ? (
     <CircularProgress />
   ) : (
@@ -23,7 +29,7 @@ const PostsList = ({ setcurrentId }) => {
       spacing={3}
     >
       {posts?.map((post) => (
-        <Grid item key={post._id} xs={12} sm={6}>
+        <Grid item key={post._id} xs={12} sm={12} md={6} lg={4}>
           <Post setcurrentId={setcurrentId} post={post} />
         </Grid>
       ))}

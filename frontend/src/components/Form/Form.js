@@ -7,6 +7,7 @@ import { TextField, Paper, Typography, Button } from '@material-ui/core';
 import { createPost, getPosts, updatepost } from '../../actions/PostActions';
 
 import useStyles from './FormStyles';
+import { useNavigate } from 'react-router-dom';
 
 const Form = ({ currentId, setcurrentId }) => {
   const [title, setTitle] = useState('');
@@ -23,6 +24,8 @@ const Form = ({ currentId, setcurrentId }) => {
   const updatingPost = posts ? posts.find((p) => p._id === currentId) : null;
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const classes = useStyles();
 
@@ -48,11 +51,10 @@ const Form = ({ currentId, setcurrentId }) => {
     };
 
     if (currentId) {
-      dispatch(updatepost(currentId, postData));
+      dispatch(updatepost(currentId, postData, navigate));
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost(postData, navigate));
     }
-    dispatch(getPosts());
 
     clearForm();
   };
