@@ -4,10 +4,19 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import postRoutes from './routes/PostsRoutes.js';
+import path from 'path';
+import http from 'http';
+
 import userRouter from './routes/UserRoutes.js';
 
-const app = express();
 dotenv.config();
+
+const CONNECTION_URL = process.env.CONNECTION_URL;
+const PORT = process.env.PORT || 5000;
+
+mongoose.connect(CONNECTION_URL).catch((error) => console.log(error.message));
+
+const app = express();
 
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
@@ -19,14 +28,15 @@ app.use(
 app.use('/posts', postRoutes);
 app.use('/user', userRouter);
 
-const CONNECTION_URL = process.env.CONNECTION_URL;
-const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve();
+// app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+app.use(express.static(path.join(__dirname, '/frontend/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/frontend/build/index.html'));
+});
 
-mongoose
-  .connect(CONNECTION_URL)
-  .then(() =>
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
-  )
-  .catch((error) => console.log(error.message));
+const httpServer = http.Server(app);
 
-mongoose.set('strictQuery', true);
+httpServer.listen(process.env.PORT || 5000, () => {
+  console.log('Server start at port 5000');
+});
