@@ -3,7 +3,7 @@ import PostModel from '../models/PostModel.js';
 
 export const getPosts = async (req, res) => {
   try {
-    const postMessages = await PostModel.find({});
+    const postMessages = await PostModel.find({}).sort({ createdAt: -1 });
 
     return res.status(200).json(postMessages);
   } catch (error) {
