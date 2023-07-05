@@ -4,7 +4,7 @@ import FileBase from 'react-file-base64';
 
 import { TextField, Paper, Typography, Button } from '@material-ui/core';
 
-import { createPost, getPosts, updatepost } from '../../actions/PostActions';
+import { createPost, updatepost } from '../../actions/PostActions';
 
 import useStyles from './FormStyles';
 import { useNavigate } from 'react-router-dom';

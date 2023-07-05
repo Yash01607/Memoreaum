@@ -14,7 +14,7 @@ import useStyles from './PostDetailsStyles';
 import CommentSection from './CommentSection';
 
 const Post = () => {
-  const { post, loading, error } = useSelector((state) => state.post);
+  const { post, loading } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const classes = useStyles();
   const { postId } = useParams();
