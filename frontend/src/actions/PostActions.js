@@ -21,7 +21,7 @@ export const getPosts = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_POSTS_REQUESTS });
 
-    const { data } = await api.fetchPost();
+    const { data } = await api.fetchPostList();
 
     dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data });
   } catch (error) {
@@ -47,6 +47,7 @@ export const updatepost = (id, updatedPost) => async (dispatch) => {
     const { data } = await api.updatepost(id, updatedPost);
 
     dispatch({ type: UPDATE_POST_SUCCESS, payload: data });
+    dispatch(getPosts());
   } catch (error) {
     dispatch({ type: UPDATE_POST_ERROR, payload: error.message });
   }

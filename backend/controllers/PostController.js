@@ -11,6 +11,22 @@ export const getPosts = async (req, res) => {
   }
 };
 
+export const getPost = async (req, res) => {
+  const postId = req?.params?.id;
+
+  if (!mongoose.Types.ObjectId.isValid(postId)) {
+    return res.status(404).send({ message: 'No Post With this Id' });
+  }
+
+  try {
+    const postMessage = await PostModel.findById(postId);
+
+    return res.status(200).json(postMessage);
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+};
+
 export const createPost = async (req, res) => {
   console.log('req.userId: ', req.userId);
   const post = new PostModel({

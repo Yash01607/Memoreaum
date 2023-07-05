@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   Button,
@@ -38,12 +38,8 @@ const Post = ({ post, setcurrentId }) => {
     dispatch(likePost(post._id));
   };
 
-  // console.log(post.creator, user?.result?.googleId);
-
   const Likes = () => {
     if (post.likes.length > 0) {
-      // console.log(post?.likes);
-      // console.log(user);
       return post.likes.find(
         (like) => like === (user?.result?.googleId || user?.result?._id)
       ) ? (

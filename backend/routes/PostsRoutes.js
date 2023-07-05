@@ -5,12 +5,14 @@ import {
   updatePost,
   deletePost,
   likePost,
+  getPost,
 } from '../controllers/PostController.js';
 import { isAuth } from '../middleware/authMiddleware.js';
 
 const postRouter = express.Router();
 
 postRouter.get('/', getPosts);
+postRouter.get('/:id', getPost);
 postRouter.post('/', isAuth, createPost);
 postRouter.patch('/:id', isAuth, updatePost);
 postRouter.delete('/:id', isAuth, deletePost);
