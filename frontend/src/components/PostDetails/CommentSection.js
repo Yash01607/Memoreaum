@@ -48,7 +48,7 @@ const CommentSection = (post) => {
             </Typography>
             <TextField
               fullWidth
-              rows={4}
+              minRows={4}
               variant="outlined"
               label="Comment"
               multiline
